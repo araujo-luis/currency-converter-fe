@@ -6,7 +6,7 @@ import { selectCurrencyBase } from "../reducers/currencyBaseReducer";
 const CurrencyConverter: FC<BaseCurrencyRate> = (props) => {
     const [exchange, setExchange] = useState(0);
     const [exchangeResult, setExchangeResult] = useState(0);
-    const { baseCurrencyRate } = props;
+    const { baseCurrencyRate, symbol } = props;
     const { currencyBase } = useSelector(selectCurrencyBase);
 
     const currencyExchange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,10 +23,14 @@ const CurrencyConverter: FC<BaseCurrencyRate> = (props) => {
     }, [baseCurrencyRate, currencyBase, exchange, setExchange])
 
     return (
-        <span>
-            <input type="text" onChange={currencyExchange} value={exchange} />
-            {exchangeResult}
-        </span>
+        <div className="form-group row">
+            <label htmlFor="converter" className="col-sm-2 col-form-label">SEK</label>
+            <div className="col-sm-10">
+                <input id="converter" className="form-control" type="text" onChange={currencyExchange} value={exchange} />
+            </div>
+            <label className="col-sm-12 col-form-label result">{exchangeResult.toFixed(2)} {symbol}</label>
+        </div>
+
     )
 }
 

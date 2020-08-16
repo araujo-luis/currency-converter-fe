@@ -7,4 +7,5 @@ export interface Currency {
 
 export interface BaseCurrencyRate {
     baseCurrencyRate: number;
+    symbol: string;
 }

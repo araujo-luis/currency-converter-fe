@@ -6,27 +6,51 @@ import CurrencyConverter from "./CurrencyConverter"
 import { selectCurrencyBase } from "../reducers/currencyBaseReducer"
 
 const SelectedCountries: FC = () => {
-
     const countries = useSelector(selectedCountries);
     const { currencyBase } = useSelector(selectCurrencyBase);
+    const Background = "https://restcountries.eu/data/hnd.svg";
 
-        return(
-            <section>
-                {countries ? countries.map((country, index) => {
-                    return <div key={index}>
-                        <p>{country.name}</p>
-                        <p>{country.population}</p>
-                        {country.currencies.map((currency: Currency, index: number) =>
-                            <div key={index}>
-                                <p>{currency.name} {currency.symbol} {Number(currency.baseCurrencyRate) / currencyBase}</p>
-                                <CurrencyConverter baseCurrencyRate={currency.baseCurrencyRate} />
+    const numberWithCommas = (x: number) => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    const convertCurrency = (number: number) => {
+        return (number / currencyBase).toFixed(2);
+    }
+    return (
+        <section>
+            <div className="container">
+                <div className="col-lg-8 mx-auto">
+                    <h1>Countries</h1>
+
+
+                    {countries ? countries.map((country, index) => {
+                        return <div className="converter-container" key={index}>
+                            <div className="flag-container col-md-4">
+                                <div className="rounded-circle image-container" style={{ backgroundImage: `url(${country.flag})` }}>
+                                </div>
                             </div>
-                        )}
-                    </div>
-                }
-                ) : null}
-            </section>
-        )
+
+                            <div className="country-container col-md-8">
+
+                                <h1>{country.name}</h1>
+                                <p>Population: {numberWithCommas(country.population)}</p>
+
+                                {country.currencies.map((currency: Currency, index: number) =>
+                                    <>
+                                        <p>Currency Name: {currency.name} ({currency.symbol})</p>
+                                        <p>Currency Rate: {convertCurrency(Number(currency.baseCurrencyRate))}</p>
+                                        <CurrencyConverter baseCurrencyRate={currency.baseCurrencyRate} symbol={currency.symbol}/>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    }
+                    ) : null}
+                </div>
+            </div>
+        </section>
+    )
 }
 
 export default SelectedCountries
