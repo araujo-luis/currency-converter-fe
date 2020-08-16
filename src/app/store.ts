@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import countryReducer from '../reducers/countryReducer';
+import currencyBaseReducer from '../reducers/currencyBaseReducer';
 
 export const store = configureStore({
   reducer: {
     countries: countryReducer,
+    currencyBase: currencyBaseReducer
   },
 });
 
