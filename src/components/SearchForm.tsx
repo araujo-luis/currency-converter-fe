@@ -1,15 +1,24 @@
-import React, { FC, useState, ChangeEvent, useEffect, MouseEvent } from "react";
+import React, { FC, useState, ChangeEvent, useEffect } from "react";
 import { search } from "../services/search";
 import { Country } from "../interfaces/Country";
+import { useDispatch, useSelector } from "react-redux";
+import { selectedCountries, addCountry } from "../reducers/countryReducer";
 
 const SearchForm: FC = () => {
     const [countryResults, setCountryResults] = useState<Country[]>([]);
     const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
+    const dispatch = useDispatch();
+
     const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setSearchValue(e.target.value);
+    }
+
+    const handleOnClick = (country: Country) => {
+       dispatch(addCountry(country))
+        
     }
 
     useEffect(() => {
@@ -32,7 +41,7 @@ const SearchForm: FC = () => {
             <input type="text" onChange={onChange} value={searchValue} />
             <ul>
                 {countryResults.length ? countryResults.map((country, index) =>
-                    <li key={index}>{country.name}</li>
+                    <li key={index} onClick={() => handleOnClick(country)}>{country.name}</li>
                 ) : null}
             </ul>
         </div>

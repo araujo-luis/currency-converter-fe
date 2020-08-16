@@ -1,23 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
-import { CountryList } from '../interfaces/Country';
+import { CountryList, Country } from '../interfaces/Country';
 
 const initialState: CountryList = {
   countries: []
 };
 
-export const updateDate = createSlice({
+export const updateCountry = createSlice({
   name: 'country',
   initialState,
   reducers: {
-    addCountry: (state, action: PayloadAction<string>) => {
-      // state.value = action.payload;
+    addCountry: (state, action: PayloadAction<Country>) => {
+      if (!state.countries?.some(e => e.name === action.payload.name))
+          state.countries?.push(action.payload)
     },
   },
 });
 
-export const { addCountry } = updateDate.actions;
+export const { addCountry } = updateCountry.actions;
 
-export const selectCountries = (state: RootState) => state.countries.countries;
+export const selectedCountries = (state: RootState) => state.countries.countries;
 
-export default updateDate.reducer;
+export default updateCountry.reducer;
