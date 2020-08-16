@@ -1,8 +1,8 @@
 import React, { FC, useState, ChangeEvent, useEffect } from "react";
 import { search } from "../services/search";
 import { Country } from "../interfaces/Country";
-import { useDispatch, useSelector } from "react-redux";
-import { selectedCountries, addCountry } from "../reducers/countryReducer";
+import { useDispatch } from "react-redux";
+import { addCountry } from "../reducers/countryReducer";
 
 const SearchForm: FC = () => {
     const [countryResults, setCountryResults] = useState<Country[]>([]);
