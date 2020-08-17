@@ -1,8 +1,7 @@
 import axios, { CancelTokenSource } from 'axios';
 import { Country } from '../interfaces/Country';
 
-const api = 'http://localhost:3000/search';
-
+const { REACT_APP_API_URL } = process.env;
 let requestToken: CancelTokenSource;
 
 export const search = async (value: string) => {
@@ -17,7 +16,7 @@ export const search = async (value: string) => {
     }
     requestToken = axios.CancelToken.source()
     try {
-        const countries = await axios.get<Country[]>(`${api}/${value}`, {
+        const countries = await axios.get<Country[]>(`${REACT_APP_API_URL}/search/${value}`, {
             cancelToken: requestToken.token,
            
         });
