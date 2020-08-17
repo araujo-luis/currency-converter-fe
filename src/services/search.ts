@@ -19,12 +19,11 @@ export const search = async (value: string) => {
     try {
         const countries = await axios.get<Country[]>(`${api}/${value}`, {
             cancelToken: requestToken.token,
-            headers: {
-                'Authorization': 'token'
-            }
+           
         });
         return countries.data;
     } catch (error) {
         console.log('An error ocurred', error);
+        return error;
     }
 }

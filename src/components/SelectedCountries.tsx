@@ -8,7 +8,6 @@ import { selectCurrencyBase } from "../reducers/currencyBaseReducer"
 const SelectedCountries: FC = () => {
     const countries = useSelector(selectedCountries);
     const { currencyBase } = useSelector(selectCurrencyBase);
-    const Background = "https://restcountries.eu/data/hnd.svg";
 
     const numberWithCommas = (x: number) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -17,10 +16,11 @@ const SelectedCountries: FC = () => {
     const convertCurrency = (number: number) => {
         return (number / currencyBase).toFixed(2);
     }
+
     return (
         <section>
             <div className="container">
-                <div className="col-lg-8 mx-auto">
+                <div className="col-lg-8 mx-auto countries">
                     <h1>Countries</h1>
 
 
@@ -37,11 +37,11 @@ const SelectedCountries: FC = () => {
                                 <p>Population: {numberWithCommas(country.population)}</p>
 
                                 {country.currencies.map((currency: Currency, index: number) =>
-                                    <>
+                                    <section key={index}>
                                         <p>Currency Name: {currency.name} ({currency.symbol})</p>
                                         <p>Currency Rate: {convertCurrency(Number(currency.baseCurrencyRate))}</p>
-                                        <CurrencyConverter baseCurrencyRate={currency.baseCurrencyRate} symbol={currency.symbol}/>
-                                    </>
+                                        <CurrencyConverter baseCurrencyRate={currency.baseCurrencyRate} symbol={currency.symbol} />
+                                    </section>
                                 )}
                             </div>
                         </div>

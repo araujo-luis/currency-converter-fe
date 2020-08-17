@@ -445,6 +445,16 @@ mark, .mark {
   font-weight: 800;
 }
 
+.login-form {
+  padding: 70px;
+  background: #2ac6a7;
+  border-radius: 10px;
+}
+
+.login-form input {
+  margin: 15px 0px;
+}
+
 .search-result {
   position: absolute;
   background: #f2f2f2;
@@ -5434,6 +5444,16 @@ a.close.disabled {
 
 .modal-open {
   overflow: hidden;
+}
+.countries{
+  margin: 1em 0;
+}
+
+.text-justify {
+  text-align: justify;
+}
+.modal-dialog {
+  color: grey;
 }
 
 .modal-open .modal {

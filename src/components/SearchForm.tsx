@@ -4,11 +4,12 @@ import { Country } from "../interfaces/Country";
 import { useDispatch } from "react-redux";
 import { addCountry } from "../reducers/countryReducer";
 import exchangeicon from '../exchangerate.svg';
+import Notification from './Notification';
 
 const SearchForm: FC = () => {
     const [countryResults, setCountryResults] = useState<Country[]>([]);
-    const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState('');
+    const [error, setError] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -24,11 +25,13 @@ const SearchForm: FC = () => {
     }
 
     useEffect(() => {
-        setLoading(true);
         const getData = async () => {
             const countries = await search(searchValue);
-            console.log('returned value', countries);
-            setLoading(false);
+            if (countries instanceof Error)
+                setError(true);
+            else
+                setError(false)
+
             if (countries?.length) {
                 setCountryResults(countries);
             }
@@ -59,9 +62,14 @@ const SearchForm: FC = () => {
                             ) : null}
                         </ul> : null}
 
+                    {error ?
+                        <Notification text="You need to log in" />
+                        : null
+                    }
+
                 </div>
             </div>
-        </header>
+        </header >
 
     )
 }

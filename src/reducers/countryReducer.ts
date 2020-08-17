@@ -13,7 +13,7 @@ export const updateCountry = createSlice({
     addCountry: (state, action: PayloadAction<Country>) => {
       if (!state.countries?.some(e => e.name === action.payload.name))
           state.countries?.push(action.payload)
-    },
+    }
   },
 });
 
